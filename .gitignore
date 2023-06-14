@@ -1,0 +1,9 @@
+# .gitignore
+
+
+.venv/
+dist/
+__pycache__/
+*.pyc
+*.swp
+
