@@ -3,6 +3,7 @@
 
 import argparse
 import json
+from itertools import chain
 
 
 def main():
@@ -25,8 +26,6 @@ def main():
     print(diff)
 
 
-
-
 def generate_diff(file_path1, file_path2):
     '''
     Compare two JSON files and return a string with the differences
@@ -41,13 +40,19 @@ def generate_diff(file_path1, file_path2):
 
     return f"{{\n{result}\n}}"
 
+
 def compare_data(data1, data2):
-    removed = (('- ' + key, data1[key]) for key in data1 if key not in data2)
-    modified_old = (('- ' + key, data1[key]) for key in data1 if key in data2 and data1[key] != data2[key])
-    modified_new = (('+ ' + key, data2[key]) for key in data1 if key in data2 and data1[key] != data2[key])
-    same = (('  ' + key, data1[key]) for key in data1 if key in data2 and data1[key] == data2[key])
-    added = (('+ ' + key, data2[key]) for key in data2 if key not in data1)
-    diff = dict(chain(removed, modified_old, modified_new, same, added))
+    removed = (('- ' + key, data1[key]) for key in data1
+               if key not in data2)
+    modified_old = (('- ' + key, data1[key]) for key in data1
+                    if key in data2 and data1[key] != data2[key])
+    modified_new = (('+ ' + key, data2[key]) for key in data1
+                    if key in data2 and data1[key] != data2[key])
+    unmodified = (('  ' + key, data1[key]) for key in data1
+                  if key in data2 and data1[key] == data2[key])
+    added = (('+ ' + key, data2[key])
+             for key in data2 if key not in data1)
+    diff = dict(chain(removed, modified_old, modified_new, unmodified, added))
     return diff
 
 
