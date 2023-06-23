@@ -41,23 +41,13 @@ def generate_diff(file_path1, file_path2):
 
     return f"{{\n{result}\n}}"
 
-
 def compare_data(data1, data2):
-    diff = {}
-
-    for key in data1:
-        if key not in data2:
-            diff['- ' + key] = data1[key]
-        elif data1[key] != data2[key]:
-            diff['- ' + key] = data1[key]
-            diff['+ ' + key] = data2[key]
-        else:
-            diff['  ' + key] = data1[key]
-
-    for key in data2:
-        if key not in data1:
-            diff['+ ' + key] = data2[key]
-
+    removed = (('- ' + key, data1[key]) for key in data1 if key not in data2)
+    modified_old = (('- ' + key, data1[key]) for key in data1 if key in data2 and data1[key] != data2[key])
+    modified_new = (('+ ' + key, data2[key]) for key in data1 if key in data2 and data1[key] != data2[key])
+    same = (('  ' + key, data1[key]) for key in data1 if key in data2 and data1[key] == data2[key])
+    added = (('+ ' + key, data2[key]) for key in data2 if key not in data1)
+    diff = dict(chain(removed, modified_old, modified_new, same, added))
     return diff
 
 
