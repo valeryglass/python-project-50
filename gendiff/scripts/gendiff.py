@@ -43,7 +43,7 @@ def generate_diff(file_path1, file_path2):
 def compare_data(data1, data2):
     """
     Create dict based on diff between input dicts.
-    
+
     removed - keys that exist in dict1 and not exist in dict2
     modified_old - keys that exist in dict1 and exist in dict2. old value
     modified_new - keys that exist in dict1 and exist in dict2. new value
