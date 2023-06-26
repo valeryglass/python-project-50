@@ -22,3 +22,7 @@ lint:
 
 check:
 	poetry run flake8 gendiff
+	poetry run pytest
+
+test:
+	poetry run pytest
