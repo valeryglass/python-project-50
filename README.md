@@ -6,3 +6,5 @@
 [![Test Coverage](https://api.codeclimate.com/v1/badges/278f39bfd39e26f23a80/test_coverage)](https://codeclimate.com/github/valeryglass/python-project-50/test_coverage)
 # Video of run --help and basic use-cases of gendiff
 https://asciinema.org/a/yXxtdoSm5kfu6Ai9oi5E1WRMx
+# Video of basic use-cases of gendiff compare different flat formats
+https://asciinema.org/a/qUBCglMf3Ahoak0FSt3E6snzl
