@@ -2,7 +2,18 @@
 
 import json
 import yaml
-import itertools
+
+
+def generate_diff(file_path1, file_path2):
+    """
+    Compare two YAML/JSON files and return a string with the differences
+    """
+    data1 = load_data(file_path1)
+    data2 = load_data(file_path2)
+
+    diff = compare_data(data1, data2)
+
+    return diff
 
 
 def load_data(file_path):
@@ -51,36 +62,3 @@ def compare_data(data1, data2):
             # Key exists in both dictionaries, and values are the same
             diff["  " + key] = data1[key]
     return diff
-
-
-# def sort_diff_keys(diff):
-#     """
-#     Sort input dict by third symbol
-#     """
-#     return dict(sorted(diff.items(), key=lambda x: x[0][2]))
-
-
-def adjust_spacer(key, spaces):
-    """
-    Adjust lenght of spaces if key has prefix
-    """
-    prefixes = ["+ ", "- ", "  "]
-    if any(key.startswith(prefix) for prefix in prefixes):
-        return spaces[:-2]
-    return spaces
-
-
-def format_diff(value, replacer=" ", spaces_count=1, depth=1):
-    """
-    Form a string from input dict
-    """
-    if isinstance(value, dict):
-        spaces = replacer * spaces_count * depth
-        result = "{\n"
-        for key, val in itertools.islice(value.items(), len(value)):
-            result += f"{adjust_spacer(key, spaces)}{key}: " \
-                      f"{format_diff(val, replacer, spaces_count, depth+1)}\n"
-        result += f"{spaces[:-len(replacer*spaces_count)]}}}"
-        return result
-    else:
-        return str(value)
