@@ -2,17 +2,18 @@
 
 import pytest
 import os
-from gendiff.scripts.gendiff import generate_diff
+from gendiff.tools import generate_diff
+from gendiff.formater import stylish
 
 
 @pytest.fixture
 def file_path1():
-    return os.path.join("gendiff", "tests", "fixtures", "file1.json")
+    return os.path.join("gendiff", "tests", "fixtures", "file12.json")
 
 
 @pytest.fixture
 def file_path2():
-    return os.path.join("gendiff", "tests", "fixtures", "file2.json")
+    return os.path.join("gendiff", "tests", "fixtures", "file22.json")
 
 
 @pytest.fixture
@@ -21,10 +22,10 @@ def expected_diff():
                            "gendiff",
                            "tests",
                            "fixtures",
-                           "expected_diff.txt"
+                           "expected_diff02.txt"
     )) as f:
         return f.read()
 
 
 def test_generate_diff(file_path1, file_path2, expected_diff):
-    assert generate_diff(file_path1, file_path2) == expected_diff.strip()
+    assert stylish(generate_diff(file_path1, file_path2)) == expected_diff
