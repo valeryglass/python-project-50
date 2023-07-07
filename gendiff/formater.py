@@ -42,6 +42,9 @@ def format_diff(value, replacer=" ", spaces_count=1, depth=1):
 
 
 def sort_diff(diff):
+    """
+    Sort diff by first symbol of key name
+    """
     sorted_diff = {}
     for key, value in sorted(diff.items(), key=lambda x: clean_keys(x[0])):
         if isinstance(value, dict):
@@ -52,6 +55,9 @@ def sort_diff(diff):
 
 
 def stylish(diff):
+    """
+    Apply 'stylish' format to dict
+    """
     sorted_diff = sort_diff(diff)
     result = format_diff(sorted_diff, " ", 4)
     return result
