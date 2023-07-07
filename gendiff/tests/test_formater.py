@@ -1,6 +1,5 @@
 # test_formater.py
 
-import pytest
 from gendiff.formater import clean_keys, adjust_spacer, sort_diff, format_diff
 
 
@@ -14,6 +13,7 @@ def test_clean_keys():
     assert clean_keys("++ key") == "++ key"
     assert clean_keys("-- key") == "-- key"
     assert clean_keys("   key") == " key"
+
 
 def test_adjust_spacer():
     assert adjust_spacer("+ key", "----") == "--"
@@ -29,31 +29,38 @@ def test_adjust_spacer():
 
 def test_sort_diff():
     diff = {
-        '+ key3': 'value3',
-        '  key2': 'value2',
-        '- key1': 'value1',
-        'key4': 'value4',
-        '+ prefix_key2': 'value2',
-        '  prefix_key3': 'value3',
-        '- prefix_key1': 'value1',
-        'prefix_key4': 'value4',
-        '+- key': 'value',
-        '-+ key': 'value',
-        '++ key': 'value',
-        '-- key': 'value',
-        '  key': 'value',
-        '  prefix_key': 'value'
+        "+ key3": "value3",
+        "  key2": "value2",
+        "- key1": "value1",
+        "key4": "value4",
+        "+ prefix_key2": "value2",
+        "  prefix_key3": "value3",
+        "- prefix_key1": "value1",
+        "prefix_key4": "value4",
+        "+- key": "value",
+        "-+ key": "value",
+        "++ key": "value",
+        "-- key": "value",
+        "  key": "value",
+        "  prefix_key": "value",
     }
     sorted_diff = sort_diff(diff)
     # Main sort case
     assert list(sorted_diff.keys()) == [
-    '++ key', '+- key',
-    '-+ key', '-- key',
-    '  key', '- key1',
-    '  key2', '+ key3',
-    'key4', '  prefix_key',
-    '- prefix_key1', '+ prefix_key2',
-    '  prefix_key3', 'prefix_key4'
+        "++ key",
+        "+- key",
+        "-+ key",
+        "-- key",
+        "  key",
+        "- key1",
+        "  key2",
+        "+ key3",
+        "key4",
+        "  prefix_key",
+        "- prefix_key1",
+        "+ prefix_key2",
+        "  prefix_key3",
+        "prefix_key4",
     ]
 
     # Empty case
@@ -62,16 +69,16 @@ def test_sort_diff():
 
 def test_format_diff():
     diff = {
-        'key1': 'value1',
-        'key2': {
-            'nested1': 'value1',
-            'nested2': 'value2',
+        "key1": "value1",
+        "key2": {
+            "nested1": "value1",
+            "nested2": "value2",
         },
-        'key3': {
-            'nested3': {
-                'nested4': 'value4',
+        "key3": {
+            "nested3": {
+                "nested4": "value4",
             },
-            'nested5': 'value5',
+            "nested5": "value5",
         },
     }
     expected_output = (
