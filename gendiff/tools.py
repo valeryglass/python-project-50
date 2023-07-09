@@ -36,11 +36,16 @@ def compare_data(data1, data2):
     """
     Create dict based on diff between input dicts.
 
-    removed - keys that exist in dict1 and not exist in dict2
-    modified_old - keys that exist in dict1 and exist in dict2. old value
-    modified_new - keys that exist in dict1 and exist in dict2. new value
-    unmodified - keys that exist in dict1 and exist in dict2. value not changed
-    added - keys that exist in dict2 and not exist in dict1
+    removed (prefix '- ') -
+    keys that exist in dict1 and not exist in dict2
+    modified_old (prefix '- ') -
+    keys that exist in dict1 and exist in dict2. old value
+    modified_new (prefix '+ ') -
+    keys that exist in dict1 and exist in dict2. new value
+    unmodified (prefix '  ') -
+    keys that exist in dict1 and exist in dict2. value not changed
+    added (prefix '+ ') -
+    keys that exist in dict2 and not exist in dict1
     """
     diff = {}
     for key in set(data1.keys()) | set(data2.keys()):
@@ -62,3 +67,29 @@ def compare_data(data1, data2):
             # Key exists in both dictionaries, and values are the same
             diff["  " + key] = data1[key]
     return diff
+
+
+# def compare_data(data1, data2):
+#     """
+#     Create dict based on diff between input dicts.
+#     """
+#     diff = {}
+#     for key in set(data1.keys()) | set(data2.keys()):
+#         if key in data1 and key not in data2:
+#             diff["- " + key] = data1[key]
+#         elif key in data2 and key not in data1:
+#             diff["+ " + key] = data2[key]
+#         else:
+#             value1 = data1.get(key)
+#             value2 = data2.get(key)
+
+#             if isinstance(value1, dict) and isinstance(value2, dict):
+#                 nested_diff = compare_data(value1, value2)
+#                 diff["  " + key] = nested_diff if nested_diff else None
+#             elif value1 != value2:
+#                 diff["- " + key] = value1
+#                 diff["+ " + key] = value2
+#             else:
+#                 diff["  " + key] = value1
+
+#     return diff
